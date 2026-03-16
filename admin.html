@@ -1,0 +1,561 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>BDH — Admin Dashboard</title>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
+<style>
+:root{
+  --bg:#f3f6f9; --card:#ffffff; --muted:#6b7280; --accent:#0b6d3a; --accent-2:#0f9d58;
+  --danger:#b91c1c; --glass: rgba(11,109,58,0.06); --radius:12px; --max-w:1200px;
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+}
+*{box-sizing:border-box}
+html,body{height:100%}
+body{margin:0;background:linear-gradient(180deg,#f7fbf8 0%, #f3f6f9 100%);color:#0f1724;-webkit-font-smoothing:antialiased}
+.container{max-width:var(--max-w);margin:0 auto;padding:18px}
+
+/* Header */
+.header{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:18px}
+.brand{display:flex;align-items:center;gap:12px}
+.logo{width:48px;height:48px;border-radius:10px;background:linear-gradient(135deg,var(--accent),var(--accent-2));display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800}
+.title{font-size:18px;font-weight:700}
+.controls{display:flex;align-items:center;gap:10px}
+
+/* search */
+.search{padding:10px 12px;border-radius:10px;border:1px solid var(--glass);background:transparent}
+
+/* grid */
+.grid{display:grid;grid-template-columns:repeat(12,1fr);gap:16px}
+
+/* cards */
+.card{background:var(--card);padding:16px;border-radius:12px;box-shadow:0 8px 24px rgba(15,23,36,0.04);border:1px solid rgba(2,6,23,0.04)}
+.span-4{grid-column:span 4}
+.span-8{grid-column:span 8}
+.span-6{grid-column:span 6}
+.span-3{grid-column:span 3}
+
+/* stats */
+.stat{display:flex;align-items:center;gap:12px}
+.stat-qty{font-size:22px;font-weight:800}
+.stat-label{font-size:13px;color:var(--muted)}
+
+/* mini charts placeholder */
+.chart{height:84px;border-radius:8px;background:linear-gradient(90deg,rgba(11,109,58,0.06),rgba(15,157,88,0.03));display:flex;align-items:center;justify-content:center;color:var(--muted);font-size:13px}
+
+/* table */
+.table{width:100%;border-collapse:collapse;margin-top:8px}
+.table th, .table td{padding:8px 10px;text-align:left;border-bottom:1px solid rgba(15,23,36,0.04);font-size:14px}
+.table th{font-weight:700;color:var(--muted);font-size:12px}
+
+/* badges */
+.badge{display:inline-flex;align-items:center;gap:8px;padding:6px 8px;border-radius:999px;font-weight:700;font-size:12px}
+.badge.ok{background:rgba(16,185,129,0.12);color:#059669}
+.badge.warn{background:rgba(250,204,21,0.12);color:#b45309}
+.badge.danger{background:rgba(239,68,68,0.08);color:var(--danger)}
+
+/* sidebar small */
+.kv{display:flex;justify-content:space-between;align-items:center}
+
+/* responsive */
+@media(max-width:1100px){
+  .grid{grid-template-columns:repeat(6,1fr)}
+  .span-4{grid-column:span 3}.span-8{grid-column:span 6}.span-6{grid-column:span 6}.span-3{grid-column:span 2}
+}
+@media(max-width:720px){
+  .container{padding:12px}
+  .grid{grid-template-columns:repeat(1,1fr)}
+  .span-4,.span-8,.span-6,.span-3{grid-column:span 1}
+  .controls{flex-direction:row;gap:8px}
+}
+
+/* subtle transitions */
+.card, .badge{transition:transform .16s ease, box-shadow .16s ease}
+.card:hover{transform:translateY(-6px);box-shadow:0 18px 40px rgba(2,6,23,0.06)}
+
+/* Grid-button popover styles (inserted button) */
+.grid-btn {
+  width:40px;height:40px;border-radius:8px;background:white;border:1px solid rgba(2,6,23,0.06);display:flex;align-items:center;justify-content:center;cursor:pointer;
+}
+.grid-btn:focus { outline:2px solid rgba(11,109,58,0.16); }
+.popover {
+  position:relative;
+}
+.popover-panel {
+  position:absolute;
+  right:0;
+  top:48px;
+  min-width:320px;
+  max-width:420px;
+  z-index:60;
+  background:var(--card);
+  border:1px solid rgba(2,6,23,0.06);
+  box-shadow:0 12px 32px rgba(2,6,23,0.08);
+  border-radius:10px;
+  padding:12px;
+}
+.popover-panel .section-title { font-weight:700;margin-bottom:8px }
+.popover-panel .menu-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:8px }
+.popover-panel button.item { display:flex; gap:10px; align-items:center; padding:10px; border-radius:8px; border:1px solid transparent; background:transparent; cursor:pointer; text-align:left }
+.popover-panel button.item:hover { background:rgba(11,109,58,0.04); color:var(--accent) }
+
+/* Mobile: make popover full width under header */
+@media(max-width:640px){
+  .popover-panel { position:static; width:100%; max-width:none; margin-top:8px; right:auto; top:auto; border-radius:8px; }
+}
+
+/* Reports view */
+.reports-view { padding:12px; background:linear-gradient(180deg,#fff,#fbfffc); border-radius:12px; border:1px solid rgba(2,6,23,0.04); box-shadow:0 8px 20px rgba(2,6,23,0.04); margin-bottom:16px }
+.reports-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:12px }
+.report-card { background:white; padding:14px; border-radius:10px; border:1px solid rgba(2,6,23,0.04); cursor:pointer; display:flex; gap:10px; align-items:center; transition:transform .14s ease }
+.report-card:hover { transform:translateY(-6px); box-shadow:0 12px 30px rgba(2,6,23,0.06) }
+.back-btn { padding:8px 12px; border-radius:8px; border:1px solid rgba(2,6,23,0.06); background:white; cursor:pointer; }
+
+/* Small adjustments for narrow screens */
+@media(max-width:800px){
+  .reports-grid { grid-template-columns:repeat(2,1fr) }
+}
+@media(max-width:480px){
+  .reports-grid { grid-template-columns:repeat(1,1fr) }
+}
+</style>
+</head>
+<body>
+  <div class="container" role="main" id="appRoot">
+    <header class="header" role="banner">
+      <div class="brand">
+        <div class="logo">BDH</div>
+        <div>
+          <div class="title">Admin Dashboard</div>
+          <div class="small">Private — Hospital administrators only</div>
+        </div>
+      </div>
+
+      <div class="controls">
+        <input class="search" placeholder="Search wards, patients, reports..." />
+        <button class="btn" onclick="location.href='users-management.html'" style="padding:8px 10px;border-radius:10px;border:1px solid rgba(2,6,23,0.06);background:white">User mgmt</button>
+        <button class="btn" onclick="location.href='audit-logs.html'"><i class="fa-solid fa-list-check"></i></button>
+        <div style="display:flex;align-items:center;gap:10px;padding:6px 10px;border-radius:10px;background:white;border:1px solid rgba(2,6,23,0.04)">
+          <i class="fa-solid fa-user-doctor" style="color:var(--accent)"></i>
+          <div style="font-size:13px">Admin</div>
+        </div>
+
+        <!-- INSERTED: grid-menu popover button (placed at right of navbar) -->
+        <div class="popover" id="gridPopover" style="margin-left:8px">
+          <button id="gridBtn" class="grid-btn" aria-haspopup="true" aria-expanded="false" aria-controls="gridPanel" title="Open quick menu">
+            <!-- simple 3x3 grid icon using small squares -->
+            <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+              <rect x="1" y="1" width="4" height="4" rx="1" fill="#111827"/>
+              <rect x="7" y="1" width="4" height="4" rx="1" fill="#111827"/>
+              <rect x="13" y="1" width="4" height="4" rx="1" fill="#111827"/>
+              <rect x="1" y="7" width="4" height="4" rx="1" fill="#111827"/>
+              <rect x="7" y="7" width="4" height="4" rx="1" fill="#111827"/>
+              <rect x="13" y="7" width="4" height="4" rx="1" fill="#111827"/>
+              <rect x="1" y="13" width="4" height="4" rx="1" fill="#111827"/>
+              <rect x="7" y="13" width="4" height="4" rx="1" fill="#111827"/>
+              <rect x="13" y="13" width="4" height="4" rx="1" fill="#111827"/>
+            </svg>
+          </button>
+
+          <div id="gridPanel" class="popover-panel" role="menu" aria-hidden="true" style="display:none">
+            <div class="section-title">Quick actions</div>
+            <div class="menu-grid">
+              <button class="item" data-action="open-reports"><i class="fa-solid fa-chart-line" aria-hidden="true"></i> Reports</button>
+              <button class="item" data-action="open-visuals"><i class="fa-solid fa-chart-pie" aria-hidden="true"></i> Visualizations</button>
+              <button class="item" data-action="open-exports"><i class="fa-solid fa-file-export" aria-hidden="true"></i> Export CSV</button>
+              <button class="item" data-action="open-settings"><i class="fa-solid fa-gear" aria-hidden="true"></i> Settings</button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </header>
+
+    <!-- Main dashboard content (kept intact) -->
+    <section class="grid" aria-label="dashboard grid" id="dashboardGrid">
+      <!-- KPI cards -->
+      <div class="card span-4">
+        <div style="display:flex;justify-content:space-between;align-items:center">
+          <div>
+            <div class="stat">
+              <div class="stat-qty">128</div>
+              <div>
+                <div class="stat-label">Current inpatients</div>
+                <div class="small">Bed occupancy: 82%</div>
+              </div>
+            </div>
+          </div>
+          <div class="badge ok"><i class="fa-solid fa-bed"></i> Beds</div>
+        </div>
+        <div style="margin-top:12px" class="chart">Occupancy sparkline (demo)</div>
+      </div>
+
+      <div class="card span-4">
+        <div style="display:flex;justify-content:space-between;align-items:center">
+          <div>
+            <div class="stat">
+              <div class="stat-qty">42</div>
+              <div>
+                <div class="stat-label">Malaria cases (7d)</div>
+                <div class="small">New: 11 in last 24h</div>
+              </div>
+            </div>
+          </div>
+          <div class="badge warn"><i class="fa-solid fa-virus-covid"></i> Outbreak watch</div>
+        </div>
+        <div style="margin-top:12px" class="chart">Malaria trend (demo)</div>
+      </div>
+
+      <div class="card span-4">
+        <div style="display:flex;justify-content:space-between;align-items:center">
+          <div>
+            <div class="stat">
+              <div class="stat-qty">36</div>
+              <div>
+                <div class="stat-label">Maternity admissions (30d)</div>
+                <div class="small">Deliveries: 28 | C-sections: 6</div>
+              </div>
+            </div>
+          </div>
+          <div class="badge danger"><i class="fa-solid fa-triangle-exclamation"></i> Critical</div>
+        </div>
+        <div style="margin-top:12px" class="chart">Maternity metrics (demo)</div>
+      </div>
+
+      <!-- larger panels -->
+      <div class="card span-8">
+        <div style="display:flex;justify-content:space-between;align-items:center">
+          <div style="font-weight:700">Admissions queue</div>
+          <div class="small">Updated: <strong>5m</strong> ago</div>
+        </div>
+        <table class="table" aria-label="admissions">
+          <thead>
+            <tr><th>Time</th><th>Ref</th><th>Ward</th><th>Diagnosis</th><th>Priority</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>08:22</td><td>#A1023</td><td>OPD</td><td>Fever / suspected malaria</td><td><span class="badge warn">Urgent</span></td></tr>
+            <tr><td>07:56</td><td>#A1022</td><td>Maternity</td><td>Labour - 3cm</td><td><span class="badge ok">Normal</span></td></tr>
+            <tr><td>06:40</td><td>#A1021</td><td>Casualty</td><td>Road traffic injury</td><td><span class="badge danger">Critical</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="card span-4">
+        <div style="display:flex;justify-content:space-between;align-items:center">
+          <div style="font-weight:700">Alerts & incidents</div>
+          <div class="small">Active</div>
+        </div>
+        <ul style="margin:12px 0;padding-left:16px;color:var(--muted)">
+          <li><strong>Immunisation stock low</strong> — measles vaccines below threshold</li>
+          <li><strong>Maternal death reported</strong> — review required (A123)</li>
+          <li><strong>Malaria cluster</strong> — 7 cases in 48h in Ward 4</li>
+        </ul>
+        <div style="display:flex;gap:8px;margin-top:8px">
+          <button class="btn" onclick="alert('Acknowledge (demo)')">Acknowledge</button>
+          <button class="btn" style="background:#fff;border:1px solid rgba(2,6,23,0.06);color:#111" onclick="location.href='staff-dashboard.html'">Open staff view</button>
+        </div>
+      </div>
+
+      <!-- maternity panel -->
+      <div class="card span-6">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+          <div style="font-weight:700">Maternity outcomes (30d)</div>
+          <div class="small">Trust: de-identify before export</div>
+        </div>
+        <div style="display:flex;gap:12px;flex-wrap:wrap">
+          <div style="flex:1;min-width:120px">
+            <div class="stat-qty">28</div>
+            <div class="stat-label">Deliveries</div>
+          </div>
+          <div style="flex:1;min-width:120px">
+            <div class="stat-qty">2</div>
+            <div class="stat-label">Maternal deaths</div>
+          </div>
+          <div style="flex:1;min-width:120px">
+            <div class="stat-qty">6</div>
+            <div class="stat-label">C-sections</div>
+          </div>
+        </div>
+        <div style="margin-top:12px" class="chart">Maternity KPIs (demo)</div>
+      </div>
+
+      <div class="card span-6">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+          <div style="font-weight:700">Malaria — weekly breakdown</div>
+          <div class="small">By age group</div>
+        </div>
+        <table class="table">
+          <thead><tr><th>Group</th><th>7d cases</th><th>%</th></tr></thead>
+          <tbody>
+            <tr><td>Under 5</td><td>18</td><td>43%</td></tr>
+            <tr><td>5–14</td><td>12</td><td>29%</td></tr>
+            <tr><td>15+</td><td>12</td><td>28%</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="card span-8">
+        <div style="display:flex;justify-content:space-between;align-items:center">
+          <div style="font-weight:700">Recent activity</div>
+          <div class="small">Audit trail preview</div>
+        </div>
+        <table class="table">
+          <thead><tr><th>Time</th><th>User</th><th>Action</th><th>Resource</th></tr></thead>
+          <tbody>
+            <tr><td>2026-03-02 09:12</td><td>dr.moyo</td><td>Viewed patient record</td><td>#P-4492 (masked)</td></tr>
+            <tr><td>2026-03-02 08:35</td><td>nurse.rapo</td><td>Updated bed assignment</td><td>Ward 3 — Bed 12</td></tr>
+            <tr><td>2026-03-02 07:58</td><td>admin</td><td>Exported malaria report</td><td>malaria-weekly.csv</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- In-page Reports view container (hidden by default) -->
+    <div id="reportsContainer" style="display:none; margin-top:12px">
+      <div class="reports-view" id="reportsViewRoot" role="region" aria-labelledby="reportsHeading">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
+          <div>
+            <div id="reportsHeading" style="font-weight:700">Reports</div>
+            <div class="small">Choose a report to generate / download</div>
+          </div>
+          <div>
+            <button class="back-btn" id="backToDashboardBtn">Back to dashboard</button>
+          </div>
+        </div>
+
+        <div class="reports-grid" id="reportsGrid">
+          <div class="report-card" data-report="malaria">
+            <i class="fa-solid fa-bug" style="font-size:20px;color:var(--accent)"></i>
+            <div>
+              <div style="font-weight:700">Malaria report</div>
+              <div class="small">Weekly summary and trends</div>
+            </div>
+          </div>
+
+          <div class="report-card" data-report="maternity">
+            <i class="fa-solid fa-baby" style="font-size:20px;color:#b45309"></i>
+            <div>
+              <div style="font-weight:700">Maternity report</div>
+              <div class="small">Outcomes, deliveries, C-sections</div>
+            </div>
+          </div>
+
+          <div class="report-card" data-report="deaths">
+            <i class="fa-solid fa-cross" style="font-size:20px;color:var(--danger)"></i>
+            <div>
+              <div style="font-weight:700">Death & mortality</div>
+              <div class="small">Review and audit</div>
+            </div>
+          </div>
+
+          <div class="report-card" data-report="immunisation">
+            <i class="fa-solid fa-syringe" style="font-size:20px;color:#0ea5a2"></i>
+            <div>
+              <div style="font-weight:700">Immunisation</div>
+              <div class="small">Stock & coverage</div>
+            </div>
+          </div>
+
+          <div class="report-card" data-report="admissions">
+            <i class="fa-solid fa-hospital" style="font-size:20px;color:#2563eb"></i>
+            <div>
+              <div style="font-weight:700">Admissions</div>
+              <div class="small">Admissions queue & wait times</div>
+            </div>
+          </div>
+
+          <div class="report-card" data-report="other">
+            <i class="fa-solid fa-file-lines" style="font-size:20px;color:#6b7280"></i>
+            <div>
+              <div style="font-weight:700">Other reports</div>
+              <div class="small">Select from additional templates</div>
+            </div>
+          </div>
+        </div>
+
+        <div id="reportDetail" style="display:none; margin-top:12px"></div>
+      </div>
+    </div>
+
+  </div>
+
+<script>
+// small demo reminder: these pages are frontend-only prototypes
+// In production, remove demo code and protect route with SSO + RBAC
+
+/* Quick menu popover behaviour and Reports flow */
+(function(){
+  const popover = document.getElementById('gridPopover');
+  if (!popover) return;
+  const gridBtn = document.getElementById('gridBtn');
+  const gridPanel = document.getElementById('gridPanel');
+
+  gridBtn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    const open = gridPanel.style.display !== 'none';
+    gridPanel.style.display = open ? 'none' : 'block';
+    gridBtn.setAttribute('aria-expanded', String(!open));
+  });
+
+  document.addEventListener('click', (e) => {
+    if (!popover.contains(e.target)) {
+      gridPanel.style.display = 'none';
+      gridBtn.setAttribute('aria-expanded', 'false');
+    }
+  });
+
+  // Main quick-action router
+  gridPanel.querySelectorAll('button.item').forEach(btn=>{
+    btn.addEventListener('click', async ()=> {
+      const action = btn.dataset.action;
+      gridPanel.style.display = 'none';
+      gridBtn.setAttribute('aria-expanded', 'false');
+
+      if (action === 'open-reports') {
+        // Attempt regular navigation to reports.html first.
+        // If the resource exists as a separate page, browser will navigate.
+        // To keep this single-file demo working, we also render the in-page reports view.
+        try {
+          // Try to fetch reports.html to see if it exists (HEAD would be ideal, using GET for broad support)
+          const resp = await fetch('reports.html', { method: 'HEAD' }).catch(()=>null);
+          if (resp && resp.ok) {
+            // real reports page exists — navigate there
+            window.location.href = 'reports.html';
+            return;
+          }
+        } catch (e) {
+          // ignore — fallback to in-page view
+        }
+        // No external reports.html — render in-page reports selector
+        openInPageReports();
+      } else if (action === 'open-visuals') {
+        alert('Open visualizations (demo)');
+      } else if (action === 'open-exports') {
+        alert('Export CSV (demo)');
+      } else if (action === 'open-settings') {
+        alert('Open settings (demo)');
+      }
+    });
+  });
+
+  // In-page reports UI logic
+  const reportsContainer = document.getElementById('reportsContainer');
+  const dashboardGrid = document.getElementById('dashboardGrid');
+  const backBtn = document.getElementById('backToDashboardBtn');
+  const reportDetail = document.getElementById('reportDetail');
+  const reportsGrid = document.getElementById('reportsGrid');
+
+  function openInPageReports() {
+    // hide dashboard, show reports
+    dashboardGrid.style.display = 'none';
+    reportsContainer.style.display = 'block';
+    // scroll to top of reports
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  function backToDashboard() {
+    reportsContainer.style.display = 'none';
+    reportDetail.style.display = 'none';
+    dashboardGrid.style.display = '';
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  backBtn.addEventListener('click', backToDashboard);
+
+  reportsGrid.querySelectorAll('.report-card').forEach(card => {
+    card.addEventListener('click', () => {
+      const key = card.dataset.report;
+      showReportDetail(key);
+    });
+  });
+
+  function showReportDetail(key) {
+    // Simple demo panel — in real app you'd render forms, filters, date ranges, export buttons
+    const titles = {
+      malaria: 'Malaria report — Weekly summary',
+      maternity: 'Maternity report — 30 day outcomes',
+      deaths: 'Death & mortality report',
+      immunisation: 'Immunisation report',
+      admissions: 'Admissions report',
+      other: 'Other reports'
+    };
+    const desc = {
+      malaria: 'Select date range, wards, and output format (CSV / PDF). Includes case counts and age breakdown.',
+      maternity: 'Choose time window and anonymisation options; includes deliveries and C-section rates.',
+      deaths: 'Sensitive data - ensure de-identification. Choose audit filters and export scope.',
+      immunisation: 'Stock levels, coverage by age group and clinic.',
+      admissions: 'Queue times, bed utilization, by ward.',
+      other: 'Additional templates: surgery, pharmacy, finance.'
+    };
+    const title = titles[key] || 'Report';
+    const copy = desc[key] || '';
+
+    reportDetail.innerHTML = `
+      <div style="background:#fff;padding:12px;border-radius:10px;border:1px solid rgba(2,6,23,0.04);box-shadow:0 6px 20px rgba(2,6,23,0.04)">
+        <div style="display:flex;justify-content:space-between;align-items:center">
+          <div>
+            <div style="font-weight:700;font-size:16px">${title}</div>
+            <div class="small" style="color:var(--muted)">${copy}</div>
+          </div>
+          <div style="display:flex;gap:8px;align-items:center">
+            <button class="back-btn" id="reportBackBtn">Back</button>
+            <button class="back-btn" id="runReportBtn" style="background:var(--accent);color:#fff;border-color:transparent">Run / Download</button>
+          </div>
+        </div>
+
+        <div style="margin-top:12px">
+          <label style="display:block;font-weight:700;margin-bottom:6px">Date range</label>
+          <div style="display:flex;gap:8px;flex-wrap:wrap">
+            <input type="date" id="fromDate" style="padding:8px;border-radius:8px;border:1px solid rgba(2,6,23,0.06)" />
+            <input type="date" id="toDate" style="padding:8px;border-radius:8px;border:1px solid rgba(2,6,23,0.06)" />
+            <select id="formatSelect" style="padding:8px;border-radius:8px;border:1px solid rgba(2,6,23,0.06)">
+              <option value="csv">CSV</option>
+              <option value="pdf">PDF</option>
+            </select>
+          </div>
+        </div>
+      </div>
+    `;
+    reportDetail.style.display = 'block';
+    // attach event handlers
+    document.getElementById('reportBackBtn').addEventListener('click', () => {
+      reportDetail.style.display = 'none';
+    });
+    document.getElementById('runReportBtn').addEventListener('click', () => {
+      const from = document.getElementById('fromDate').value;
+      const to = document.getElementById('toDate').value;
+      const format = document.getElementById('formatSelect').value;
+      // Very small demo behaviour: create a CSV (if CSV chosen) and download, otherwise show alert.
+      if (format === 'csv') {
+        // generate demo CSV content based on report type
+        const csvRows = [
+          ['Report', title],
+          ['Generated', new Date().toISOString()],
+          [],
+          ['Field','Value'],
+          ['Example metric','42']
+        ];
+        const csvContent = csvRows.map(r => r.map(cell => `"${String(cell).replace(/"/g,'""')}"`).join(',')).join('\n');
+        const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `${key}-report-${(from||'start')}-${(to||'end')}.csv`;
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+        URL.revokeObjectURL(url);
+      } else {
+        alert(`${title}\n\nRun (demo) — export as PDF requested.\n(from: ${from || '—'}, to: ${to || '—'})`);
+      }
+    });
+  }
+
+  // expose the in-page reports opener for debugging if needed
+  window.openInPageReports = openInPageReports;
+
+})();
+</script>
+</body>
+</html>

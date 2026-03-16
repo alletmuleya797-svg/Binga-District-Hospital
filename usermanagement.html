@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>BDH — Users Management</title>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
+<style>
+:root{--bg:#f6f8f9;--card:#fff;--muted:#6b7280;--accent:#0b6d3a}
+*{box-sizing:border-box}body{margin:0;font-family:Inter,system-ui,Arial;background:var(--bg);color:#0f1724}
+.container{max-width:1100px;margin:16px auto;padding:16px}
+.header{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}
+.card{background:var(--card);padding:12px;border-radius:10px;border:1px solid rgba(2,6,23,0.04)}
+.table{width:100%;border-collapse:collapse;margin-top:8px}
+.table th,.table td{padding:10px;border-bottom:1px solid rgba(15,23,36,0.04);text-align:left}
+.role{padding:6px 8px;border-radius:8px;font-weight:700}
+.role.admin{background:#eef2ff;color:#4338ca}
+.role.nurse{background:#f0fdf4;color:#059669}
+.role.clin{background:#fff7ed;color:#b45309}
+.controls{display:flex;gap:8px;align-items:center}
+@media(max-width:700px){.controls{flex-direction:column;align-items:stretch}}
+</style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <div>
+        <div style="font-weight:800">User Management</div>
+        <div style="color:var(--muted);font-size:13px">Create and manage staff accounts (demo)</div>
+      </div>
+      <div class="controls">
+        <button class="btn" onclick="alert('Create user (demo)')"><i class="fa-solid fa-user-plus"></i> New user</button>
+        <button class="btn" onclick="location.href='admin-dashboard.html'">Back to dashboard</button>
+      </div>
+    </div>
+
+    <div class="card">
+      <table class="table" aria-label="users">
+        <thead><tr><th>Name</th><th>Email</th><th>Role</th><th>Last login</th><th>Actions</th></tr></thead>
+        <tbody>
+          <tr><td>Dr Moyo</td><td>dr.moyo@bingahospital.org</td><td><span class="role admin">Admin</span></td><td>2026-03-02 09:12</td><td><button class="btn" onclick="alert('Edit (demo)')">Edit</button></td></tr>
+          <tr><td>Nurse Rapo</td><td>nurse.rapo@bingahospital.org</td><td><span class="role nurse">Nurse</span></td><td>2026-03-02 08:35</td><td><button class="btn" onclick="alert('Reset pw (demo)')">Reset</button></td></tr>
+          <tr><td>Clerk Taku</td><td>clerk.taku@bingahospital.org</td><td><span class="role clin">Clerical</span></td><td>2026-03-01 12:16</td><td><button class="btn" onclick="alert('Disable (demo)')">Disable</button></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</body>
+</html>

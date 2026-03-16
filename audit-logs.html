@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>BDH — Audit Logs</title>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
+<style>
+:root{--bg:#f9fafb;--card:#fff;--muted:#6b7280}
+*{box-sizing:border-box}body{margin:0;font-family:Inter,system-ui,Arial;background:var(--bg);color:#0f1724}
+.container{max-width:1100px;margin:16px auto;padding:16px}
+.header{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}
+.card{background:var(--card);padding:12px;border-radius:10px;border:1px solid rgba(2,6,23,0.04)}
+.table{width:100%;border-collapse:collapse;margin-top:8px}
+.table th,.table td{padding:10px;border-bottom:1px solid rgba(15,23,36,0.04);text-align:left}
+.filter{display:flex;gap:8px;align-items:center}
+@media(max-width:700px){.filter{flex-direction:column;align-items:stretch}}
+</style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <div>
+        <div style="font-weight:800">Audit Logs</div>
+        <div style="color:var(--muted);font-size:13px">All access and export actions are recorded. Filter and review here.</div>
+      </div>
+      <div class="filter">
+        <input class="input" placeholder="Filter by user or resource" style="padding:8px;border-radius:8px;border:1px solid rgba(2,6,23,0.06)" />
+        <button class="btn" onclick="alert('Filter demo')">Filter</button>
+      </div>
+    </div>
+
+    <div class="card">
+      <table class="table" aria-label="logs">
+        <thead><tr><th>Timestamp</th><th>User</th><th>Action</th><th>Resource</th><th>IP</th></tr></thead>
+        <tbody>
+          <tr><td>2026-03-02 09:12</td><td>dr.moyo</td><td>Viewed patient record</td><td>#P-4492 (masked)</td><td>192.168.10.12</td></tr>
+          <tr><td>2026-03-02 08:35</td><td>nurse.rapo</td><td>Updated bed assignment</td><td>Ward 3 — Bed 12</td><td>192.168.10.33</td></tr>
+          <tr><td>2026-03-02 07:58</td><td>admin</td><td>Exported malaria report</td><td>malaria-weekly.csv</td><td>192.168.10.8</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</body>
+</html>

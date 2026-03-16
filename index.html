@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Binga District Hospital — Home</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <style>
+    /* Shared styles (same as template) */
+    :root{--brand:#0b6d3a;--accent:#0f9d58;--muted:#6b7280;--bg:#f7faf9;--card:#ffffff;--glass: rgba(255,255,255,0.6);--max-width:1200px;--radius:12px;--shadow: 0 6px 18px rgba(13, 14, 16, 0.08);--glass-shadow: 0 8px 30px rgba(13,14,16,0.06);--transition: 220ms cubic-bezier(.2,.9,.3,1);font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;}
+    *{box-sizing:border-box}html,body{height:100%}body{margin:0;background:linear-gradient(180deg,#f3faf5 0%, #f7faf9 100%);color:#0f1724;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;line-height:1.45;padding-bottom:48px}
+    a{color:inherit;text-decoration:none}.container{max-width:var(--max-width);margin:0 auto;padding:24px;}
+    header.site-header{position:sticky;top:0;z-index:60;backdrop-filter: blur(6px);background:linear-gradient(180deg, rgba(255,255,255,0.75), rgba(255,255,255,0.6));box-shadow:var(--glass-shadow);border-bottom:1px solid rgba(15,23,36,0.04);}
+    .header-inner{display:flex;align-items:center;justify-content:space-between;gap:16px;max-width:var(--max-width);margin:0 auto;padding:14px 20px;}
+    .brand{display:flex;align-items:center;gap:12px}.brand .logo{width:46px;height:46px;border-radius:10px;background:linear-gradient(135deg,var(--brand),var(--accent));display:flex;align-items:center;justify-content:center;color:white;font-weight:700;font-size:18px;box-shadow:var(--shadow)}.brand h1{font-size:18px;margin:0}
+    .top-ctas{display:flex;align-items:center;gap:10px}.btn{display:inline-flex;align-items:center;gap:8px;padding:10px 14px;border-radius:10px;background:var(--card);border:1px solid rgba(15,23,36,0.06);box-shadow:var(--shadow);cursor:pointer;transition:transform var(--transition),box-shadow var(--transition);} .btn:hover{transform:translateY(-3px)} .btn-primary{background:linear-gradient(90deg,var(--brand),var(--accent));color:white;border:none;box-shadow: 0 8px 24px rgba(11,109,58,0.18)} .btn-ghost{background:transparent;border:1px solid rgba(15,23,36,0.06)}
+    nav.main-nav{display:flex;align-items:center;gap:16px}.nav-links{display:flex;gap:12px;align-items:center}.nav-links a{padding:8px 10px;border-radius:8px;color:var(--muted);font-weight:600}.nav-links a:hover{background:rgba(15,23,36,0.04);color:var(--brand)}.hamburger{display:none;background:transparent;border:none;font-size:20px}
+    .hero{padding:48px 0 32px}.hero-grid{display:grid;grid-template-columns:1fr 420px;gap:28px;align-items:start}.hero-card{background:var(--card);padding:28px;border-radius:14px;box-shadow:var(--shadow)}.hero h2{margin:0 0 8px;font-size:28px}.hero p{color:var(--muted);margin:0 0 16px}.emergency{display:flex;gap:14px;align-items:center;padding:12px;border-radius:10px;background:linear-gradient(90deg,#ffe9e9,#fff5f5);border:1px solid rgba(255,10,10,0.06)}.emergency .number{font-weight:800;color:#b91c1c;font-size:18px}.quick-links{display:flex;flex-wrap:wrap;gap:10px;margin-top:12px}.quick-card{flex:1 1 140px;min-width:120px;background:linear-gradient(180deg,var(--glass), #fff);padding:12px;border-radius:10px;border:1px solid rgba(15,23,36,0.04);display:flex;gap:10px;align-items:center}.quick-card i{font-size:20px;color:var(--brand)}.hero-form{display:flex;flex-direction:column;gap:12px}.search, .select{width:100%;padding:12px;border-radius:10px;border:1px solid rgba(15,23,36,0.06);font-size:14px;}
+    .section{padding:28px 0}.section-header{display:flex;align-items:end;justify-content:space-between;gap:14px;margin-bottom:14px}.section-header h3{margin:0}
+    .grid-departments{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}.dept-card{background:linear-gradient(180deg,var(--card),#fcfffb);padding:18px;border-radius:12px;border:1px solid rgba(15,23,36,0.04);transition:transform var(--transition),box-shadow var(--transition);display:flex;flex-direction:column;gap:12px}.dept-card:hover{transform:translateY(-6px);box-shadow:var(--glass-shadow)}.dept-card i{font-size:22px;color:var(--accent)}.dept-card h4{margin:0}.dept-meta{color:var(--muted);font-size:13px}
+    .news-list{display:grid;gap:12px}.news-item{display:flex;gap:12px;align-items:center;background:var(--card);padding:12px;border-radius:10px;border:1px solid rgba(15,23,36,0.04)}
+    .resources-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}.resource{background:linear-gradient(180deg,#fff,#fbfff9);padding:14px;border-radius:12px;border:1px solid rgba(15,23,36,0.04);display:flex;gap:12px;align-items:center}
+    .contact-grid{display:grid;grid-template-columns:1fr 360px;gap:18px}.map-placeholder{background:linear-gradient(180deg,#e6f9ee,#f6fff8);height:220px;border-radius:12px;border:1px dashed rgba(15,23,36,0.06);display:flex;align-items:center;justify-content:center;color:var(--muted)}.contact-card{background:var(--card);padding:16px;border-radius:12px;border:1px solid rgba(15,23,36,0.04)}
+    footer.site-footer{margin-top:28px;background:transparent;padding:28px 0;border-top:1px solid rgba(15,23,36,0.04)}.footer-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}.small{font-size:13px;color:var(--muted)}
+    .sitemap-list{display:flex;gap:24px;flex-wrap:wrap}.sitemap-col{min-width:220px}.sitemap-col h4{margin:0 0 8px}.sitemap-col ul{list-style:none;padding:0;margin:0}.sitemap-col li{margin-bottom:6px}
+    .modal-backdrop{position:fixed;inset:0;background:rgba(2,6,23,0.45);display:none;align-items:center;justify-content:center;z-index:120}.modal{background:var(--card);padding:20px;border-radius:12px;max-width:540px;width:94%;box-shadow:var(--glass-shadow)}.modal.open{display:flex}.form-row{display:flex;gap:10px}.form-row .col{flex:1}input,textarea,select{font-family:inherit}.input{width:100%;padding:10px;border-radius:8px;border:1px solid rgba(15,23,36,0.06)}textarea{min-height:100px}
+    @media(max-width:1024px){.hero-grid{grid-template-columns:1fr 360px}.grid-departments{grid-template-columns:repeat(2,1fr)}.resources-grid{grid-template-columns:repeat(2,1fr)}.contact-grid{grid-template-columns:1fr}.footer-grid{grid-template-columns:repeat(2,1fr)}}@media(max-width:720px){.nav-links{display:none}.hamburger{display:inline-block}.hero-grid{grid-template-columns:1fr}.grid-departments{grid-template-columns:1fr}.resources-grid{grid-template-columns:1fr}.footer-grid{grid-template-columns:1fr}.header-inner{padding:10px 14px}.brand h1{font-size:16px}.hero{padding:18px 0}.hero h2{font-size:20px}.hero p{font-size:14px}.top-ctas .btn{padding:8px 10px;font-size:14px}}
+  </style>
+</head>
+<body>
+  <header class="site-header" role="banner">
+    <div class="header-inner">
+      <div class="brand">
+        <div class="logo">BDH</div>
+        <div>
+          <h1>Binga District Hospital</h1>
+          <div class="small">Serving the community since 19XX</div>
+        </div>
+      </div>
+
+      <nav class="main-nav" role="navigation" aria-label="Main navigation">
+        <div class="nav-links" id="navLinks">
+          <a href="index.html">Home</a>
+          <a href="services.html">Services</a>
+          <a href="patients.html">Patients</a>
+          <a href="appointments.html">Appointments</a>
+          <a href="news.html">News</a>
+          <a href="contact.html">Contact</a>
+          <a href="index.html#sitemap">Sitemap</a>
+        </div>
+
+        <div class="top-ctas">
+          <button class="btn btn-ghost" id="langToggle"><i class="fa-solid fa-language"></i> EN</button>
+          <button class="btn btn-primary" id="openAppointment"><i class="fa-regular fa-calendar-plus"></i> Book Appointment</button>
+          <button class="hamburger" id="mobileNavBtn" aria-label="Open menu"><i class="fa-solid fa-bars"></i></button>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero container" id="home">
+      <div class="hero-grid">
+        <div class="hero-card">
+          <div class="emergency">
+            <div>
+              <div class="small">EMERGENCY</div>
+              <div class="number">+263 77 000 0000</div>
+            </div>
+            <div style="margin-left:auto;text-align:right">
+              <div class="small">Open 24/7</div>
+              <div class="small">Casualty & Triage</div>
+            </div>
+          </div>
+
+          <h2>Welcome to Binga District Hospital</h2>
+          <p>Providing compassionate care, outpatient services, maternity, emergency, and community health programs. Find services, contact information and patient guidance below.</p>
+
+          <div class="quick-links" role="list">
+            <div class="quick-card" role="listitem">
+              <i class="fa-solid fa-stethoscope"></i>
+              <div>
+                <div style="font-weight:700">Outpatient Services</div>
+                <div class="small">OPD hours & clinics</div>
+              </div>
+            </div>
+            <div class="quick-card" role="listitem">
+              <i class="fa-solid fa-hospital-user"></i>
+              <div>
+                <div style="font-weight:700">Maternity</div>
+                <div class="small">Antenatal & delivery</div>
+              </div>
+            </div>
+            <div class="quick-card" role="listitem">
+              <i class="fa-solid fa-pills"></i>
+              <div>
+                <div style="font-weight:700">Pharmacy</div>
+                <div class="small">Medication & opening times</div>
+              </div>
+            </div>
+          </div>
+
+          <div style="margin-top:16px">
+            <form class="hero-form" action="services.html" method="get">
+              <input class="search" name="q" placeholder="Search services, departments or info..." />
+              <div style="display:flex;gap:10px">
+                <select class="select" name="department">
+                  <option value="">Choose department</option>
+                  <option>Outpatients</option>
+                  <option>Maternity</option>
+                  <option>Emergency</option>
+                  <option>Laboratory</option>
+                </select>
+                <button class="btn btn-primary" id="ctaSearch"><i class="fa-solid fa-magnifying-glass"></i> Search</button>
+              </div>
+            </form>
+          </div>
+        </div>
+
+        <aside>
+          <div class="hero-card" style="display:flex;flex-direction:column;gap:12px">
+            <h3 style="margin:0">Quick Appointment</h3>
+            <p class="small" style="margin:0">Request an appointment and we will call to confirm.</p>
+            <button class="btn btn-primary" id="openAppointment2"><i class="fa-regular fa-calendar"></i> Request Appointment</button>
+            
+            <div style="margin-top:12px">
+              <h4 style="margin:0 0 6px">Clinic Schedule</h4>
+              <div class="small">Mon–Fri: 08:00–16:00<br/>Maternity: 24/7</div>
+            </div>
+
+            <div style="margin-top:12px">
+              <h4 style="margin:0 0 6px">Latest Alert</h4>
+              <div class="small">Immunisation campaign starts 12 Mar — free vaccines for children under 5.</div>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <section class="section container" id="services">
+      <div class="section-header">
+        <h3>Services & Departments</h3>
+        <div class="small">Click a department to learn more or make a referral</div>
+      </div>
+
+      <div class="grid-departments">
+        <article class="dept-card">
+          <div style="display:flex;align-items:center;gap:12px">
+            <i class="fa-solid fa-hospital"></i>
+            <div>
+              <h4>Outpatients (OPD)</h4>
+              <div class="dept-meta">Walk-in clinic, general consults, referrals</div>
+            </div>
+          </div>
+          <p class="small">Daily clinics for general medicine and minor procedures. OPD opens at 08:00 weekdays.</p>
+          <div style="margin-top:auto;display:flex;gap:8px">
+            <a class="btn" href="services.html">View</a>
+            <a class="btn btn-primary" href="appointments.html">Refer</a>
+          </div>
+        </article>
+
+        <article class="dept-card">
+          <div style="display:flex;align-items:center;gap:12px">
+            <i class="fa-solid fa-briefcase-medical"></i>
+            <div>
+              <h4>Emergency & Casualty</h4>
+              <div class="dept-meta">24/7 emergency care</div>
+            </div>
+          </div>
+          <p class="small">Triage and stabilisation. For life-threatening conditions call the emergency number immediately.</p>
+          <div style="margin-top:auto;display:flex;gap:8px">
+            <a class="btn" href="contact.html">View</a>
+            <a class="btn btn-primary" href="tel:+263770000000">Call Now</a>
+          </div>
+        </article>
+
+        <article class="dept-card">
+          <div style="display:flex;align-items:center;gap:12px">
+            <i class="fa-solid fa-baby"></i>
+            <div>
+              <h4>Maternity</h4>
+              <div class="dept-meta">Antenatal, delivery & postnatal care</div>
+            </div>
+          </div>
+          <p class="small">Comprehensive care for mothers and newborns. Emergency obstetric services available 24/7.</p>
+          <div style="margin-top:auto;display:flex;gap:8px">
+            <a class="btn" href="services.html">View</a>
+            <a class="btn btn-primary" href="appointments.html">Register</a>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="section container" id="news">
+      <div class="section-header">
+        <h3>News & Announcements</h3>
+        <div class="small">Latest updates from the hospital</div>
+      </div>
+
+      <div class="news-list">
+        <div class="news-item">
+          <i class="fa-regular fa-circle-check" style="font-size:20px;color:var(--brand)"></i>
+          <div>
+            <div style="font-weight:700">Immunisation Campaign — 12 Mar</div>
+            <div class="meta small">Published: 01 Mar 2026</div>
+            <div class="small" style="margin-top:6px">Free vaccines for children under 5 across Binga District. Check clinic times.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section container" id="sitemap">
+      <div class="section-header">
+        <h3>HTML Sitemap</h3>
+        <div class="small">A full list of public pages</div>
+      </div>
+
+      <div class="sitemap-list">
+        <div class="sitemap-col">
+          <h4>Primary</h4>
+          <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="services.html">Services</a></li>
+            <li><a href="patients.html">Patients</a></li>
+            <li><a href="appointments.html">Appointments</a></li>
+          </ul>
+        </div>
+
+        <div class="sitemap-col">
+          <h4>Information</h4>
+          <ul>
+            <li><a href="news.html">News & Announcements</a></li>
+            <li><a href="contact.html">Contact & Location</a></li>
+            <li><a href="index.html#sitemap">Sitemap</a></li>
+          </ul>
+        </div>
+
+        <div class="sitemap-col">
+          <h4>Utilities</h4>
+          <ul>
+            <li><a href="#">Privacy Policy</a></li>
+            <li><a href="#">Terms & Accessibility</a></li>
+            <li><a href="#">Careers</a></li>
+          </ul>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer container" role="contentinfo">
+    <div class="footer-grid">
+      <div>
+        <h4>Binga District Hospital</h4>
+        <div class="small">Committed to serving the health needs of our community.</div>
+      </div>
+
+      <div>
+        <h4>Contact</h4>
+        <div class="small">Phone: +263 77 000 0000<br>Email: info@bingahospital.org</div>
+      </div>
+
+      <div>
+        <h4>Quick links</h4>
+        <div class="small">
+          <a href="appointments.html">Book Appointment</a><br>
+          <a href="services.html">Services</a><br>
+          <a href="index.html#sitemap">Sitemap</a>
+        </div>
+      </div>
+
+      <div>
+        <h4>Follow</h4>
+        <div class="small">Connect with us on social media</div>
+      </div>
+    </div>
+
+    <div style="margin-top:18px;text-align:center" class="small">© Binga District Hospital — All rights reserved</div>
+  </footer>
+
+  <div class="modal-backdrop" id="modalBackdrop" aria-hidden="true">
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+      <h3 id="modalTitle">Request an Appointment</h3>
+      <p class="small">Complete this form and we will contact you to confirm.</p>
+      <form onsubmit="return false;" style="display:flex;flex-direction:column;gap:10px;margin-top:8px">
+        <div class="form-row">
+          <input class="input col" placeholder="Full name" />
+          <input class="input col" placeholder="Phone number" />
+        </div>
+        <select class="input">
+          <option>Select Department</option>
+          <option>Outpatients</option>
+          <option>Maternity</option>
+          <option>Laboratory</option>
+        </select>
+        <div class="form-row">
+          <input class="input col" placeholder="Preferred date" />
+          <input class="input col" placeholder="Preferred time" />
+        </div>
+        <textarea class="input" placeholder="Brief reason for visit (optional)"></textarea>
+        <div style="display:flex;gap:8px;justify-content:flex-end">
+          <button class="btn" id="closeModal">Cancel</button>
+          <button class="btn btn-primary">Send Request</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    // Mobile nav toggle
+    const mobileBtn = document.getElementById('mobileNavBtn');
+    const navLinks = document.getElementById('navLinks');
+    mobileBtn.addEventListener('click', () => {
+      const shown = navLinks.style.display === 'flex';
+      navLinks.style.display = shown ? 'none' : 'flex';
+      navLinks.style.flexDirection = 'column';
+      navLinks.style.position = 'absolute';
+      navLinks.style.right = '20px';
+      navLinks.style.top = '68px';
+      navLinks.style.background = 'white';
+      navLinks.style.padding = '12px';
+      navLinks.style.borderRadius = '10px';
+      navLinks.style.boxShadow = 'var(--glass-shadow)';
+    });
+
+    // Modal
+    const modal = document.getElementById('modalBackdrop');
+    const openBtns = [document.getElementById('openAppointment'), document.getElementById('openAppointment2')];
+    const closeBtn = document.getElementById('closeModal');
+    openBtns.forEach(b => b && b.addEventListener('click', () => {
+      modal.style.display = 'flex';
+      modal.setAttribute('aria-hidden','false');
+    }));
+    closeBtn.addEventListener('click', () => {
+      modal.style.display = 'none';
+      modal.setAttribute('aria-hidden','true');
+    });
+    modal.addEventListener('click', (e) => {
+      if (e.target === modal) { modal.style.display = 'none'; modal.setAttribute('aria-hidden','true'); }
+    });
+
+    // Smooth scroll for in-page anchors
+    document.querySelectorAll('a[href^="#"]').forEach(link => {
+      link.addEventListener('click', (e) => {
+        e.preventDefault();
+        const target = document.querySelector(link.getAttribute('href'));
+        if (target) target.scrollIntoView({behavior:'smooth', block:'start'});
+      });
+    });
+  </script>
+</body>
+</html>

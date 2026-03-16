@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>BDH — Staff Dashboard</title>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
+<style>
+:root{
+  --bg:#eef6f1; --card:#ffffff; --accent:#0b6d3a; --muted:#5b6b71; --radius:12px; --max-w:1100px;
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+}
+*{box-sizing:border-box}
+html,body{height:100%}
+body{margin:0;background:linear-gradient(180deg,#f7fbf9 0%, #eef6f1 100%);color:#0f1724}
+.container{max-width:var(--max-w);margin:0 auto;padding:16px}
+
+/* header */
+.header{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:16px}
+.brand{display:flex;align-items:center;gap:12px}
+.logo{width:44px;height:44px;border-radius:10px;background:linear-gradient(135deg,var(--accent),#0f9d58);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700}
+.search{padding:10px;border-radius:10px;border:1px solid rgba(2,6,23,0.06)}
+.grid{display:grid;grid-template-columns:repeat(12,1fr);gap:14px}
+.card{background:var(--card);padding:14px;border-radius:10px;border:1px solid rgba(2,6,23,0.04)}
+.span-8{grid-column:span 8}.span-4{grid-column:span 4}.span-6{grid-column:span 6}
+@media(max-width:900px){.grid{grid-template-columns:repeat(6,1fr)}.span-8{grid-column:span 6}.span-4{grid-column:span 6}.span-6{grid-column:span 6}}
+@media(max-width:600px){.grid{grid-template-columns:repeat(1,1fr)}.span-8,.span-4{grid-column:span 1}}
+.table{width:100%;border-collapse:collapse;margin-top:8px}
+.table th,.table td{padding:8px;border-bottom:1px solid rgba(15,23,36,0.04);text-align:left;font-size:14px}
+.badge{padding:6px 8px;border-radius:999px;font-weight:700;font-size:12px}
+.badge.urgent{background:#fff4f2;color:#dc2626}
+.badge.normal{background:#ecfdf5;color:#059669}
+.actions{display:flex;gap:8px;flex-wrap:wrap}
+.fade-in{animation:fade .6s ease both}
+@keyframes fade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+</style>
+</head>
+<body>
+  <div class="container">
+    <header class="header">
+      <div class="brand">
+        <div class="logo">BDH</div>
+        <div>
+          <div style="font-weight:700">Staff Dashboard</div>
+          <div style="font-size:13px;color:var(--muted)">Ward view & tasks (de-identified demo)</div>
+        </div>
+      </div>
+
+      <div style="display:flex;align-items:center;gap:10px">
+        <input class="search" placeholder="Search patient (ID), ward, task..." />
+        <button onclick="location.href='login.html'" style="padding:8px;border-radius:10px;background:#fff;border:1px solid rgba(2,6,23,0.06)">Sign out</button>
+      </div>
+    </header>
+
+    <main class="grid" role="main">
+      <div class="card span-8 fade-in">
+        <div style="display:flex;justify-content:space-between;align-items:center">
+          <div style="font-weight:700">Ward — Maternity (Ward 2)</div>
+          <div class="small">Occupancy: 86% | Staff on duty: 6</div>
+        </div>
+
+        <table class="table" aria-label="ward list">
+          <thead><tr><th>Bed</th><th>Patient (masked)</th><th>Age</th><th>Admitted</th><th>Task</th></tr></thead>
+          <tbody>
+            <tr><td>2-01</td><td>P-XXXX-4492</td><td>28</td><td>2026-03-01</td><td><span class="badge normal">Stable</span></td></tr>
+            <tr><td>2-02</td><td>P-XXXX-4493</td><td>24</td><td>2026-03-02</td><td><span class="badge urgent">Post-op</span></td></tr>
+            <tr><td>2-03</td><td>P-XXXX-4494</td><td>31</td><td>2026-03-02</td><td><span class="badge normal">Observation</span></td></tr>
+          </tbody>
+        </table>
+
+        <div style="margin-top:12px;display:flex;gap:8px" class="actions">
+          <button class="btn" onclick="alert('Assign task (demo)')"><i class="fa-solid fa-plus"></i> Assign task</button>
+          <button class="btn" style="background:#fff;border:1px solid rgba(2,6,23,0.06)" onclick="alert('Open rounds (demo)')">Start rounds</button>
+        </div>
+      </div>
+
+      <div class="card span-4 fade-in">
+        <div style="display:flex;justify-content:space-between;align-items:center">
+          <div style="font-weight:700">Quick actions</div>
+          <div class="small">Shift: Day</div>
+        </div>
+        <div style="margin-top:12px;display:flex;flex-direction:column;gap:8px">
+          <button class="btn" onclick="alert('Call on duty (demo)')">Call on duty</button>
+          <button class="btn" style="background:#fff;border:1px solid rgba(2,6,23,0.06)" onclick="alert('Report incident (demo)')">Report incident</button>
+          <button class="btn" style="background:#fff;border:1px solid rgba(2,6,23,0.06)" onclick="location.href='admin-dashboard.html'">Open admin</button>
+        </div>
+      </div>
+
+      <div class="card span-6 fade-in">
+        <div style="font-weight:700">Tasks assigned to you</div>
+        <ul style="margin:12px 0;padding-left:16px;color:var(--muted)">
+          <li>Check post-op patient #P-XXXX-4493 — vitals 2 hourly</li>
+          <li>Update delivery register for 02 Mar</li>
+          <li>Collect malaria rapid test kits from pharmacy</li>
+        </ul>
+      </div>
+
+      <div class="card span-6 fade-in">
+        <div style="font-weight:700">Shift notes</div>
+        <div style="margin-top:8px;color:var(--muted)">
+          <p><strong>08:00</strong> — Morning handover completed. 2 pending lab results.</p>
+          <p><strong>07:30</strong> — One emergency transfer to theatre (stable).</p>
+        </div>
+      </div>
+    </main>
+  </div>
+</body>
+</html>

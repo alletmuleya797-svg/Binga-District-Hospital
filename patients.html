@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Binga District Hospital — Patients & Visitors</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <style>
+    :root{
+      --brand:#0b6d3a;
+      --accent:#0f9d58;
+      --muted:#6b7280;
+      --bg:#f7faf9;
+      --card:#ffffff;
+      --glass: rgba(255,255,255,0.6);
+      --max-width:1200px;
+      --radius:12px;
+      --shadow: 0 6px 18px rgba(13, 14, 16, 0.08);
+      --glass-shadow: 0 8px 30px rgba(13,14,16,0.06);
+      --transition: 220ms cubic-bezier(.2,.9,.3,1);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      background:linear-gradient(180deg,#f3faf5 0%, #f7faf9 100%);
+      color:#0f1724;
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+      line-height:1.45;
+      padding-bottom:48px;
+    }
+    a{color:inherit;text-decoration:none}
+    .container{max-width:var(--max-width);margin:0 auto;padding:24px;width:100%;}
+    header.site-header{
+      position:sticky;top:0;z-index:60;
+      backdrop-filter: blur(6px);
+      background:linear-gradient(180deg, rgba(255,255,255,0.75), rgba(255,255,255,0.6));
+      box-shadow:var(--glass-shadow);
+      border-bottom:1px solid rgba(15,23,36,0.04);
+    }
+    .header-inner{display:flex;align-items:center;justify-content:space-between;gap:16px;max-width:var(--max-width);margin:0 auto;padding:14px 20px;}
+    .brand{display:flex;align-items:center;gap:12px}
+    .brand .logo{width:46px;height:46px;border-radius:10px;background:linear-gradient(135deg,var(--brand),var(--accent));display:flex;align-items:center;justify-content:center;color:white;font-weight:700;font-size:18px;box-shadow:var(--shadow)}
+    .brand h1{font-size:18px;margin:0}
+    .top-ctas{display:flex;align-items:center;gap:10px}
+    .btn{display:inline-flex;align-items:center;gap:8px;padding:10px 14px;border-radius:10px;background:var(--card);border:1px solid rgba(15,23,36,0.06);box-shadow:var(--shadow);cursor:pointer;transition:transform var(--transition),box-shadow var(--transition);}
+    .btn:hover{transform:translateY(-3px)}
+    .btn-primary{background:linear-gradient(90deg,var(--brand),var(--accent));color:white;border:none;box-shadow: 0 8px 24px rgba(11,109,58,0.18)}
+    .btn-ghost{background:transparent;border:1px solid rgba(15,23,36,0.06)}
+    nav.main-nav{display:flex;align-items:center;gap:16px}
+    .nav-links{display:flex;gap:12px;align-items:center}
+    .nav-links a{padding:8px 10px;border-radius:8px;color:var(--muted);font-weight:600}
+    .nav-links a:hover{background:rgba(15,23,36,0.04);color:var(--brand)}
+    .hamburger{display:none;background:transparent;border:none;font-size:20px}
+    .section{padding:28px 0}
+    .section-header{display:flex;align-items:end;justify-content:space-between;gap:14px;margin-bottom:14px}
+    .section-header h3{margin:0}
+    .hero-card{background:var(--card);padding:28px;border-radius:14px;box-shadow:var(--shadow);width:100%}
+    .contact-card{background:var(--card);padding:16px;border-radius:12px;border:1px solid rgba(15,23,36,0.04);width:100%}
+    footer.site-footer{margin-top:28px;background:transparent;padding:28px 0;border-top:1px solid rgba(15,23,36,0.04)}
+    .footer-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
+    .small{font-size:13px;color:var(--muted)}
+
+    /* Fees table */
+    .fees-table{margin-top:12px;border:1px dashed rgba(11,109,58,0.15);border-radius:10px;padding:12px;background:linear-gradient(180deg, rgba(255,255,255,0.6), rgba(255,255,255,0.9));overflow:hidden}
+    .fees-table table{width:100%;border-collapse:collapse;font-size:14px}
+    .fees-table th{background:transparent;color:var(--brand);text-align:left;padding:10px 8px;font-weight:700}
+    .fees-table td{padding:10px 8px;border-top:1px solid rgba(15,23,36,0.04);color:#0f1724}
+    .fees-service{display:flex;align-items:center;gap:10px;font-weight:600}
+    .fees-amount{color:var(--muted);font-weight:600}
+
+    /* Layout */
+    .frame {
+      display: grid;
+      grid-template-columns: 1fr 320px;
+      gap: 18px;
+      align-items: start;
+      width: 100%;
+    }
+
+    html, body { overflow-x: hidden; }
+
+    @media (max-width: 1024px) {
+      .frame { grid-template-columns: 100%; }
+      .hero-card, .contact-card { width: 100%; }
+    }
+
+    /* Mobile Table Customization */
+    @media (max-width: 600px) {
+      .fees-table table, .fees-table thead, .fees-table tbody, .fees-table th, .fees-table td, .fees-table tr { 
+        display: block; 
+      }
+      .fees-table thead tr { 
+        position: absolute;
+        top: -9999px;
+        left: -9999px;
+      }
+      .fees-table tr { 
+        border-bottom: 1px solid rgba(15,23,36,0.1); 
+        padding: 10px 0;
+      }
+      .fees-table tr:last-child { border-bottom: none; }
+      .fees-table td { 
+        border: none;
+        position: relative;
+        padding-left: 50% !important; 
+        text-align: left !important;
+        margin-bottom: 4px;
+      }
+      .fees-table td:before { 
+        position: absolute;
+        top: 10px;
+        left: 8px;
+        width: 45%; 
+        padding-right: 10px; 
+        white-space: nowrap;
+        font-weight: 700;
+        color: var(--brand);
+      }
+      
+      /* Standard row labels */
+      .fees-table td:nth-of-type(1):before { content: "Service"; }
+      .fees-table td:nth-of-type(2):before { content: "Adult"; }
+      .fees-table td:nth-of-type(3):before { content: "Children"; }
+      
+      /* Specific labels for Medical Examination row on mobile */
+      .medical-exam-row td:nth-of-type(2):before { content: "Food Handlers"; }
+      .medical-exam-row td:nth-of-type(3):before { content: "College/Emp."; }
+      
+      .fees-table td.fees-service { padding-left: 8px !important; display: block; width: 100%; font-size: 15px; background: rgba(11,109,58,0.05); border-radius: 4px; }
+      .fees-table td.fees-service:before { content: ""; }
+    }
+
+    @media (max-width: 720px) {
+      .nav-links{display:none}
+      .hamburger{display:inline-block}
+      .footer-grid{grid-template-columns:1fr}
+      .section .hero-card{padding:18px}
+    }
+  </style>
+</head>
+<body>
+  <header class="site-header" role="banner">
+    <div class="header-inner">
+      <div class="brand">
+        <div class="logo">BDH</div>
+        <div>
+          <h1>Binga District Hospital</h1>
+          <div class="small">Patients & Visitors</div>
+        </div>
+      </div>
+      <nav class="main-nav" role="navigation">
+        <div class="nav-links" id="navLinks">
+          <a href="index.html">Home</a>
+          <a href="services.html">Services</a>
+          <a href="patients.html">Patients</a>
+          <a href="appointments.html">Appointments</a>
+          <a href="news.html">News</a>
+          <a href="contact.html">Contact</a>
+        </div>
+        <div class="top-ctas">
+          <button class="btn btn-ghost"><i class="fa-solid fa-language"></i> EN</button>
+          <button class="btn btn-primary" id="openAppointment"><i class="fa-regular fa-calendar-plus"></i> Book Appointment</button>
+          <button class="hamburger" id="mobileNavBtn"><i class="fa-solid fa-bars"></i></button>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="section">
+      <div class="section-header">
+        <h3>Patients & Visitors</h3>
+        <div class="small">Admission, visiting, fees and patient rights</div>
+      </div>
+
+      <div class="frame">
+        <div class="hero-card">
+          <h4>Visiting Hours & Admissions</h4>
+          <p class="small">Visiting hours: 14:00–16:00 daily. Emergency admissions open 24/7 at Casualty.</p>
+          <h4 style="margin-top:12px">Fees & Billing</h4>
+          <div class="fees-table">
+            <table>
+              <thead>
+                <tr>
+                  <th>Service</th>
+                  <th style="text-align:right">Adult</th>
+                  <th style="text-align:right">Children</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td class="fees-service">Consultation</td>
+                  <td style="text-align:right" class="fees-amount">$6</td>
+                  <td style="text-align:right" class="fees-amount">$3</td>
+                </tr>
+                <tr>
+                  <td class="fees-service">X‑ray</td>
+                  <td style="text-align:right" class="fees-amount">$10</td>
+                  <td style="text-align:right" class="fees-amount">$10</td>
+                </tr>
+                <tr>
+                  <td class="fees-service">Theatre</td>
+                  <td style="text-align:right" class="fees-amount">$15</td>
+                  <td style="text-align:right" class="fees-amount">$15</td>
+                </tr>
+                <tr>
+                  <td class="fees-service">Bedding</td>
+                  <td style="text-align:right" class="fees-amount">$6</td>
+                  <td style="text-align:right" class="fees-amount">$4</td>
+                </tr>
+                <tr class="medical-exam-row">
+                  <td class="fees-service">Medical Examination</td>
+                  <td style="text-align:right" class="fees-amount">
+                    $20<br><span style="font-size:11px; font-weight:normal;">Food Handlers</span>
+                  </td>
+                  <td style="text-align:right" class="fees-amount">
+                    $30<br><span style="font-size:11px; font-weight:normal;">College / Employment</span>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="fees-service">FBC (Full Blood Count)</td>
+                  <td style="text-align:right" class="fees-amount">$8</td>
+                  <td style="text-align:right" class="fees-amount">$8</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <aside class="contact-card">
+          <h4>Quick Forms</h4>
+          <button class="btn" style="width:100%;margin-top:8px">Pre-register Patient</button>
+          <button class="btn" style="width:100%;margin-top:8px">Download Referral Form</button>
+          <button class="btn" style="width:100%;margin-top:8px">File a Complaint</button>
+        </aside>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer container">
+    <div class="footer-grid">
+      <div>
+        <h4>Binga District Hospital</h4>
+        <div class="small">Committed to serving the health community.</div>
+      </div>
+      <div>
+        <h4>Contact</h4>
+        <div class="small">Phone: +263 77 000 0000<br>Email: info@bingahospital.org</div>
+      </div>
+    </div>
+    <div style="margin-top:18px;text-align:center" class="small">© Binga District Hospital — All rights reserved</div>
+  </footer>
+
+  <script>
+    const mobileBtn = document.getElementById('mobileNavBtn');
+    const navLinks = document.getElementById('navLinks');
+    mobileBtn && mobileBtn.addEventListener('click', () => {
+      const shown = navLinks.style.display === 'flex';
+      navLinks.style.display = shown ? 'none' : 'flex';
+      if (!shown) {
+        navLinks.style.flexDirection = 'column';
+        navLinks.style.position = 'absolute';
+        navLinks.style.right = '16px';
+        navLinks.style.top = '68px';
+        navLinks.style.background = 'white';
+        navLinks.style.padding = '12px';
+        navLinks.style.borderRadius = '10px';
+        navLinks.style.boxShadow = 'var(--glass-shadow)';
+        navLinks.style.zIndex = '100';
+      }
+    });
+  </script>
+</body>
+</html>

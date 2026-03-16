@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Binga District Hospital — Contact & Location</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <style>
+    /* Same CSS */
+    :root{--brand:#0b6d3a;--accent:#0f9d58;--muted:#6b7280;--bg:#f7faf9;--card:#ffffff;--glass: rgba(255,255,255,0.6);--max-width:1200px;--radius:12px;--shadow: 0 6px 18px rgba(13, 14, 16, 0.08);--glass-shadow: 0 8px 30px rgba(13,14,16,0.06);--transition: 220ms cubic-bezier(.2,.9,.3,1);font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;}
+    *{box-sizing:border-box}html,body{height:100%}body{margin:0;background:linear-gradient(180deg,#f3faf5 0%, #f7faf9 100%);color:#0f1724;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;line-height:1.45;padding-bottom:48px}
+    a{color:inherit;text-decoration:none}.container{max-width:var(--max-width);margin:0 auto;padding:24px;}
+    header.site-header{position:sticky;top:0;z-index:60;backdrop-filter: blur(6px);background:linear-gradient(180deg, rgba(255,255,255,0.75), rgba(255,255,255,0.6));box-shadow:var(--glass-shadow);border-bottom:1px solid rgba(15,23,36,0.04);}
+    .header-inner{display:flex;align-items:center;justify-content:space-between;gap:16px;max-width:var(--max-width);margin:0 auto;padding:14px 20px;}
+    .brand{display:flex;align-items:center;gap:12px}.brand .logo{width:46px;height:46px;border-radius:10px;background:linear-gradient(135deg,var(--brand),var(--accent));display:flex;align-items:center;justify-content:center;color:white;font-weight:700;font-size:18px;box-shadow:var(--shadow)}.brand h1{font-size:18px;margin:0}
+    .top-ctas{display:flex;align-items:center;gap:10px}.btn{display:inline-flex;align-items:center;gap:8px;padding:10px 14px;border-radius:10px;background:var(--card);border:1px solid rgba(15,23,36,0.06);box-shadow:var(--shadow);cursor:pointer;transition:transform var(--transition),box-shadow var(--transition);} .btn:hover{transform:translateY(-3px)} .btn-primary{background:linear-gradient(90deg,var(--brand),var(--accent));color:white;border:none;box-shadow: 0 8px 24px rgba(11,109,58,0.18)} .btn-ghost{background:transparent;border:1px solid rgba(15,23,36,0.06)}
+    nav.main-nav{display:flex;align-items:center;gap:16px}.nav-links{display:flex;gap:12px;align-items:center}.nav-links a{padding:8px 10px;border-radius:8px;color:var(--muted);font-weight:600}.nav-links a:hover{background:rgba(15,23,36,0.04);color:var(--brand)}.hamburger{display:none;background:transparent;border:none;font-size:20px}
+    .contact-grid{display:grid;grid-template-columns:1fr 360px;gap:18px}.map-placeholder{background:linear-gradient(180deg,#e6f9ee,#f6fff8);height:220px;border-radius:12px;border:1px dashed rgba(15,23,36,0.06);display:flex;align-items:center;justify-content:center;color:var(--muted)}.contact-card{background:var(--card);padding:16px;border-radius:12px;border:1px solid rgba(15,23,36,0.04)}
+    footer.site-footer{margin-top:28px;background:transparent;padding:28px 0;border-top:1px solid rgba(15,23,36,0.04)}.footer-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}.small{font-size:13px;color:var(--muted)}
+    .modal-backdrop{position:fixed;inset:0;background:rgba(2,6,23,0.45);display:none;align-items:center;justify-content:center;z-index:120}.modal{background:var(--card);padding:20px;border-radius:12px;max-width:540px;width:94%;box-shadow:var(--glass-shadow)}.modal.open{display:flex}.form-row{display:flex;gap:10px}.form-row .col{flex:1}input,textarea,select{font-family:inherit}.input{width:100%;padding:10px;border-radius:8px;border:1px solid rgba(15,23,36,0.06)}textarea{min-height:100px}
+    @media(max-width:1024px){.contact-grid{grid-template-columns:1fr}.footer-grid{grid-template-columns:repeat(2,1fr)}}@media(max-width:720px){.nav-links{display:none}.hamburger{display:inline-block}.footer-grid{grid-template-columns:1fr}}
+  </style>
+</head>
+<body>
+  <header class="site-header" role="banner">
+    <div class="header-inner">
+      <div class="brand">
+        <div class="logo">BDH</div>
+        <div>
+          <h1>Binga District Hospital</h1>
+          <div class="small">News & Announcement</div>
+        </div>
+      </div>
+
+      <nav class="main-nav" role="navigation" aria-label="Main navigation">
+        <div class="nav-links" id="navLinks">
+          <a href="index.html">Home</a>
+          <a href="services.html">Services</a>
+          <a href="patients.html">Patients</a>
+          <a href="appointments.html">Appointments</a>
+          <a href="news.html">News</a>
+          <a href="contact.html">Contact</a>
+        </div>
+
+        <div class="top-ctas">
+          <button class="btn btn-ghost"><i class="fa-solid fa-language"></i> EN</button>
+          <button class="btn btn-primary" id="openAppointment"><i class="fa-regular fa-calendar-plus"></i> Book Appointment</button>
+          <button class="hamburger" id="mobileNavBtn"><i class="fa-solid fa-bars"></i></button>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+    <section class="section container" id="news">
+      <div class="section-header">
+        <h3>News & Announcements</h3>
+        <div class="small">Latest updates from the hospital</div>
+      </div>
+
+      <div class="news-list">
+        <div class="news-item">
+          <i class="fa-regular fa-circle-check" style="font-size:20px;color:var(--brand)"></i>
+          <div>
+            <div style="font-weight:700">Immunisation Campaign — 12 Mar</div>
+            <div class="meta small">Published: 01 Mar 2026</div>
+            <div class="small" style="margin-top:6px">Free vaccines for children under 5 across Binga District. Check clinic times.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+</body>
+</html>

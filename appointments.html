@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Binga District Hospital — Appointments & Referrals</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <style>
+    /* Same CSS */
+    :root{--brand:#0b6d3a;--accent:#0f9d58;--muted:#6b7280;--bg:#f7faf9;--card:#ffffff;--glass: rgba(255,255,255,0.6);--max-width:1200px;--radius:12px;--shadow: 0 6px 18px rgba(13, 14, 16, 0.08);--glass-shadow: 0 8px 30px rgba(13,14,16,0.06);--transition: 220ms cubic-bezier(.2,.9,.3,1);font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;}
+    *{box-sizing:border-box}html,body{height:100%}body{margin:0;background:linear-gradient(180deg,#f3faf5 0%, #f7faf9 100%);color:#0f1724;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;line-height:1.45;padding-bottom:48px}
+    a{color:inherit;text-decoration:none}.container{max-width:var(--max-width);margin:0 auto;padding:24px;}
+    header.site-header{position:sticky;top:0;z-index:60;backdrop-filter: blur(6px);background:linear-gradient(180deg, rgba(255,255,255,0.75), rgba(255,255,255,0.6));box-shadow:var(--glass-shadow);border-bottom:1px solid rgba(15,23,36,0.04);}
+    .header-inner{display:flex;align-items:center;justify-content:space-between;gap:16px;max-width:var(--max-width);margin:0 auto;padding:14px 20px;}
+    .brand{display:flex;align-items:center;gap:12px}.brand .logo{width:46px;height:46px;border-radius:10px;background:linear-gradient(135deg,var(--brand),var(--accent));display:flex;align-items:center;justify-content:center;color:white;font-weight:700;font-size:18px;box-shadow:var(--shadow)}.brand h1{font-size:18px;margin:0}
+    .top-ctas{display:flex;align-items:center;gap:10px}.btn{display:inline-flex;align-items:center;gap:8px;padding:10px 14px;border-radius:10px;background:var(--card);border:1px solid rgba(15,23,36,0.06);box-shadow:var(--shadow);cursor:pointer;transition:transform var(--transition),box-shadow var(--transition);} .btn:hover{transform:translateY(-3px)} .btn-primary{background:linear-gradient(90deg,var(--brand),var(--accent));color:white;border:none;box-shadow: 0 8px 24px rgba(11,109,58,0.18)} .btn-ghost{background:transparent;border:1px solid rgba(15,23,36,0.06)}
+    nav.main-nav{display:flex;align-items:center;gap:16px}.nav-links{display:flex;gap:12px;align-items:center}.nav-links a{padding:8px 10px;border-radius:8px;color:var(--muted);font-weight:600}.nav-links a:hover{background:rgba(15,23,36,0.04);color:var(--brand)}.hamburger{display:none;background:transparent;border:none;font-size:20px}
+    .section{padding:28px 0}.section-header{display:flex;align-items:end;justify-content:space-between;gap:14px;margin-bottom:14px}.section-header h3{margin:0}
+    .hero-card{background:var(--card);padding:28px;border-radius:14px;box-shadow:var(--shadow)}.contact-card{background:var(--card);padding:16px;border-radius:12px;border:1px solid rgba(15,23,36,0.04)}.small{font-size:13px;color:var(--muted)}
+    .modal-backdrop{position:fixed;inset:0;background:rgba(2,6,23,0.45);display:none;align-items:center;justify-content:center;z-index:120}.modal{background:var(--card);padding:20px;border-radius:12px;max-width:540px;width:94%;box-shadow:var(--glass-shadow)}.modal.open{display:flex}.form-row{display:flex;gap:10px}.form-row .col{flex:1}input,textarea,select{font-family:inherit}.input{width:100%;padding:10px;border-radius:8px;border:1px solid rgba(15,23,36,0.06)}textarea{min-height:100px}
+    @media(max-width:1024px){.footer-grid{grid-template-columns:repeat(2,1fr)}}@media(max-width:720px){.nav-links{display:none}.hamburger{display:inline-block}.footer-grid{grid-template-columns:1fr}}
+  </style>
+</head>
+<body>
+  <header class="site-header" role="banner">
+    <div class="header-inner">
+      <div class="brand">
+        <div class="logo">BDH</div>
+        <div>
+          <h1>Binga District Hospital</h1>
+          <div class="small">Appointments & Referrals</div>
+        </div>
+      </div>
+
+      <nav class="main-nav" role="navigation" aria-label="Main navigation">
+        <div class="nav-links" id="navLinks">
+          <a href="index.html">Home</a>
+          <a href="services.html">Services</a>
+          <a href="patients.html">Patients</a>
+          <a href="appointments.html">Appointments</a>
+          <a href="news.html">News</a>
+          <a href="contact.html">Contact</a>
+        </div>
+
+        <div class="top-ctas">
+          <button class="btn btn-ghost"><i class="fa-solid fa-language"></i> EN</button>
+          <button class="btn btn-primary" id="openAppointment"><i class="fa-regular fa-calendar-plus"></i> Book Appointment</button>
+          <button class="hamburger" id="mobileNavBtn"><i class="fa-solid fa-bars"></i></button>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="section">
+      <div class="section-header">
+        <h3>Appointments & Referrals</h3>
+        <div class="small">Book, reschedule or refer a patient</div>
+      </div>
+
+      <div style="display:flex;gap:18px;flex-wrap:wrap">
+        <div class="hero-card" style="flex:1;min-width:320px">
+          <h4>Book an Appointment</h4>
+          <p class="small">Use the request form and we will call to confirm the date and time.</p>
+          <form onsubmit="return false;" style="display:flex;flex-direction:column;gap:10px;margin-top:8px">
+            <input class="input" placeholder="Full name" />
+            <input class="input" placeholder="Phone number" />
+            <select class="input">
+              <option>Select Department</option>
+              <option>Outpatients</option>
+              <option>Maternity</option>
+              <option>Laboratory</option>
+            </select>
+            <div style="display:flex;gap:10px">
+              <input class="input" placeholder="Preferred date" />
+              <input class="input" placeholder="Preferred time" />
+            </div>
+            <textarea class="input" placeholder="Brief reason for visit (optional)"></textarea>
+            <div style="display:flex;gap:8px">
+              <button class="btn btn-primary">Submit Request</button>
+              <button class="btn">Reset</button>
+            </div>
+          </form>
+        </div>
+
+        <div class="hero-card" style="width:320px">
+          <h4>Referral Guidance</h4>
+          <p class="small">Download the referral form and include patient details, reason for referral, clinical notes and contact number.</p>
+          <a class="btn" href="#" style="width:100%;margin-top:8px">Download Referral Form</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer container" role="contentinfo">
+    <div class="footer-grid">
+      <div>
+        <h4>Binga District Hospital</h4>
+        <div class="small">Committed to serving the health needs of our community.</div>
+      </div>
+
+      <div>
+        <h4>Contact</h4>
+        <div class="small">Phone: +263 77 000 0000<br>Email: info@bingahospital.org</div>
+      </div>
+
+      <div>
+        <h4>Quick links</h4>
+        <div class="small">
+          <a href="index.html">Home</a><br>
+          <a href="services.html">Services</a><br>
+          <a href="contact.html">Contact</a>
+        </div>
+      </div>
+
+      <div>
+        <h4>Follow</h4>
+        <div class="small">Connect with us on social media</div>
+      </div>
+    </div>
+
+    <div style="margin-top:18px;text-align:center" class="small">© Binga District Hospital — All rights reserved</div>
+  </footer>
+
+  <div class="modal-backdrop" id="modalBackdrop" aria-hidden="true">
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+      <h3 id="modalTitle">Request an Appointment</h3>
+      <p class="small">Complete this form and we will contact you to confirm.</p>
+      <form onsubmit="return false;" style="display:flex;flex-direction:column;gap:10px;margin-top:8px">
+        <div class="form-row">
+          <input class="input col" placeholder="Full name" />
+          <input class="input col" placeholder="Phone number" />
+        </div>
+        <select class="input">
+          <option>Select Department</option>
+          <option>Outpatients</option>
+          <option>Maternity</option>
+          <option>Laboratory</option>
+        </select>
+        <div class="form-row">
+          <input class="input col" placeholder="Preferred date" />
+          <input class="input col" placeholder="Preferred time" />
+        </div>
+        <textarea class="input" placeholder="Brief reason for visit (optional)"></textarea>
+        <div style="display:flex;gap:8px;justify-content:flex-end">
+          <button class="btn" id="closeModal">Cancel</button>
+          <button class="btn btn-primary">Send Request</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    const mobileBtn = document.getElementById('mobileNavBtn');
+    const navLinks = document.getElementById('navLinks');
+    mobileBtn && mobileBtn.addEventListener('click', () => {
+      const shown = navLinks.style.display === 'flex';
+      navLinks.style.display = shown ? 'none' : 'flex';
+      navLinks.style.flexDirection = 'column';
+      navLinks.style.position = 'absolute';
+      navLinks.style.right = '20px';
+      navLinks.style.top = '68px';
+      navLinks.style.background = 'white';
+      navLinks.style.padding = '12px';
+      navLinks.style.borderRadius = '10px';
+      navLinks.style.boxShadow = 'var(--glass-shadow)';
+    });
+
+    const modal = document.getElementById('modalBackdrop');
+    const openBtn = document.getElementById('openAppointment');
+    const closeBtn = document.getElementById('closeModal');
+    openBtn && openBtn.addEventListener('click', () => { modal.style.display = 'flex'; modal.setAttribute('aria-hidden','false'); });
+    closeBtn && closeBtn.addEventListener('click', () => { modal.style.display = 'none'; modal.setAttribute('aria-hidden','true'); });
+    modal && modal.addEventListener('click', (e) => { if (e.target === modal) { modal.style.display = 'none'; modal.setAttribute('aria-hidden','true'); }});
+  </script>
+</body>
+</html>
